@@ -1,17 +1,28 @@
-def fizzbuzz(numero):
-    """
-    Devuelve 'fizz' si el número es divisible por 3, 'buzz' si es divisible por 5,
-    'fizzbuzz' si es divisible por ambos, o el número mismo en otro caso.
-    """
-    if numero % 3 == 0 and numero % 5 == 0:
-        return "fizzbuzz"
-    elif numero % 3 == 0:
-        return "fizz"
-    elif numero % 5 == 0:
-        return "buzz"
-    else:
-        return numero
+# src/fizzBuzz.py
 
-# Ejemplo de uso:
-# for i in range(1, 16):
-#     print(fizzbuzz(i)) 
+def fizzbuzz(number: int):
+    """Calculates the FizzBuzz result for a given integer.
+
+    Args:
+        number: The integer to evaluate.
+
+    Returns:
+        "Fizz" if the number is divisible by 3.
+        "Buzz" if the number is divisible by 5.
+        "FizzBuzz" if the number is divisible by both 3 and 5.
+        The number itself otherwise.
+    """
+    # [RATIONALE] Check for divisibility by 15 first (3*5) to handle the
+    # "FizzBuzz" case correctly. Otherwise, numbers divisible by 15 would
+    # incorrectly return "Fizz" or "Buzz" based on the order of checks.
+    if number % 15 == 0:
+        return "FizzBuzz"
+    # Check for divisibility by 3
+    elif number % 3 == 0:
+        return "Fizz"
+    # Check for divisibility by 5
+    elif number % 5 == 0:
+        return "Buzz"
+    # Otherwise, return the number itself
+    else:
+        return number 

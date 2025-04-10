@@ -1,0 +1,101 @@
+---
+description: 'Enforces Test-Driven Development (TDD) or mandatory test creation for ALL Python code (.py files). Apply this rule whenever Python code is created, modified, or discussed, especially when generating new functions or modules. Tests are non-negotiable.'
+globs: *.py
+alwaysApply: false
+---
+
+# Python Test-Driven Development (TDD) and Mandatory Testing
+
+## Critical Rules
+
+- **Mandatory Testing:** Writing or modifying *any* Python code requires the creation or update of corresponding tests. NO EXCEPTIONS.
+- **New File Creation:** When creating a *new* Python file (`.py`), corresponding tests MUST be created immediately in a related test file (e.g., `test_fizzBuzz.py` for `src/fizzBuzz.py`). This requirement applies even if the initial request only mentioned the implementation.
+- **Preferred Approach (TDD):**
+    - Before writing function implementation, create a test file (e.g., `test_my_module.py` for `my_module.py`).
+    - Write a test case in this file that defines the desired behavior and currently fails (Red).
+    - Write the minimum implementation code necessary to make the test pass (Green).
+    - Refactor the implementation and test code while ensuring all tests continue to pass (Refactor).
+- **Alternative (Implementation First):** If function implementation is created *before* writing tests (less ideal but acceptable):
+    - Immediately create a corresponding test file (e.g., `test_my_module.py` for `my_module.py`).
+    - Add at least one test verifying the "happy path" (correct execution with valid inputs) to this file.
+    - Add at least one test verifying a failure scenario (e.g., handling invalid inputs, edge cases, exceptions) to this file.
+- All new public functions/methods MUST have corresponding tests in a dedicated test file, created following either the TDD cycle or the Implementation First approach.
+- Modifications to existing functions MUST include updates or additions to their tests, ideally *before* changing the implementation. If implementation is changed first, tests MUST be updated/added immediately after.
+
+## Examples
+
+<example name="TDD Cycle">
+  # 0. Create files: calculator.py, test_calculator.py
+  # 1. Write failing test (Red)
+  # test_calculator.py
+  import unittest
+  from calculator import add # Assume add doesn't exist yet or is empty
+
+  class TestCalculator(unittest.TestCase):
+      def test_add_positive_numbers(self):
+          # This test will fail initially
+          self.assertEqual(add(2, 3), 5)
+
+  # 2. Write minimal code to pass (Green)
+  # calculator.py
+  def add(a, b):
+      return 5 # Simplest code to pass this specific test
+
+  # 3. Run tests (Pass)
+
+  # 4. Refactor code (Refactor)
+  # calculator.py
+  def add(a, b):
+      # More general and correct implementation
+      return a + b
+
+  # 5. Run tests again (Still Pass)
+</example>
+
+<example name="Implementation First">
+  # 1. Write implementation first
+  # calculator.py
+  def divide(a, b):
+      if b == 0:
+          raise ValueError("Cannot divide by zero")
+      return a / b
+
+  # 2. Create test file: test_calculator.py
+  # 3. Write tests (happy path and failure) in test_calculator.py
+  # test_calculator.py
+  import unittest
+  from calculator import divide
+
+  class TestCalculator(unittest.TestCase):
+      def test_divide_happy_path(self):
+          self.assertEqual(divide(10, 2), 5)
+
+      def test_divide_by_zero(self):
+          with self.assertRaises(ValueError):
+              divide(10, 0)
+
+  # 4. Run tests (Pass)
+</example>
+
+<example type="invalid" name="Missing Test File/Tests After Implementation">
+  # 1. Writing implementation
+  # utils.py
+  def format_data(data):
+      # ... implementation ...
+      return formatted_data
+
+  # 2. FAILS to create test_utils.py and add tests. THIS IS A VIOLATION.
+</example>
+
+<example type="invalid" name="TDD Violation - Implementation Before Test">
+  # Writing implementation BEFORE the test (when intending TDD)
+  # calculator.py
+  def subtract(a, b):
+      return a - b # Implementation written first
+
+  # THEN writing the test in test_calculator.py
+  # test_calculator.py
+  # ...
+  # This violates the *preferred* TDD approach.
+  # It only becomes acceptable under the "Implementation First" path IF failure tests are also added immediately to test_calculator.py.
+</example> 

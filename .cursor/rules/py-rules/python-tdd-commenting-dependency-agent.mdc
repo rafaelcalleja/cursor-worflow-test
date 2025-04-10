@@ -1,0 +1,37 @@
+---
+description: `Apply this rule whenever Python code (.py files) is being created or modified. This rule ensures that when the Test-Driven Development (TDD) process (mandated by py-rules/tdd-python-functions-auto) is followed, the Python commenting standard (defined in py-rules/python-commenting-standard-agent) is strictly applied to BOTH the implementation code AND the corresponding test code.`
+globs: 
+alwaysApply: false
+---
+
+# Python TDD and Commenting Standard Dependency
+
+## Critical Rules
+
+- When creating or modifying Python code (`*.py` files), the TDD rule (`py-rules/tdd-python-functions-auto`) MUST be applied.
+- As part of applying the TDD rule, the Python commenting standard rule (`py-rules/python-commenting-standard-agent`) MUST be applied to:
+  - The implementation code being written or modified.
+  - The test code being written or modified for that implementation.
+- Both rules are mandatory and must be applied together for all Python code development.
+
+## Examples
+
+<example>
+  User asks to create a new Python function `calculate_sum(a, b)`.
+  1. Agent applies `py-rules/tdd-python-functions-auto`: Creates `test_calculate_sum.py` first.
+  2. Agent applies `py-rules/python-commenting-standard-agent`: Adds appropriate docstrings and comments to `test_calculate_sum.py`.
+  3. Agent implements `calculate_sum(a, b)` in the main file.
+  4. Agent applies `py-rules/python-commenting-standard-agent`: Adds appropriate docstrings and comments to the `calculate_sum` function implementation. ✅
+</example>
+
+<example type="invalid">
+  User asks to create a new Python function `calculate_product(a, b)`.
+  1. Agent applies `py-rules/tdd-python-functions-auto`: Creates `test_calculate_product.py` and the implementation.
+  2. Agent applies `py-rules/python-commenting-standard-agent` ONLY to the implementation code, neglecting the test code. ❌
+</example>
+
+<example type="invalid">
+  User asks to modify an existing Python class.
+  1. Agent applies `py-rules/tdd-python-functions-auto`: Modifies existing tests and implementation.
+  2. Agent forgets to apply `py-rules/python-commenting-standard-agent` to the changes in either the test or implementation file. ❌
+</example> 

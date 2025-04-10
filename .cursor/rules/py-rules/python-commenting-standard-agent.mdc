@@ -1,0 +1,116 @@
+---
+description: 'Defines a Python commenting standard integrating PEP 8, Google Style Guide, and AI-specific considerations. Apply when discussing, planning, or implementing Python code, especially involving complex logic, architectural choices, performance optimizations, or AI/LLM components, to ensure clarity, maintainability, and machine-readable context.'
+globs: *.py
+alwaysApply: false
+---
+
+# Python Commenting Standard for Enhanced Understanding & AI Context
+
+This standard promotes clear, concise, and context-rich comments, balancing human readability with machine-parsable signals for complex systems, particularly those involving AI/LLM components. It draws upon established best practices (PEP 8, Google Python Style Guide) and adapts them for modern AI development challenges.
+
+## Guiding Principles
+
+1.  **Self-Documenting Code First:** Prioritize writing clear, readable code with descriptive names and logical structure. Comments should supplement, not substitute, code clarity. (Ref: Google Python Style Guide)
+2.  **Comment the "Why," Not the "What":** Assume the reader understands Python. Comments should explain the intent, rationale, tradeoffs, or complex logic that isn't immediately obvious from the code itself. (Ref: Google Python Style Guide, PEP 8)
+3.  **Keep Comments Updated:** Outdated comments are worse than no comments. Maintain comments rigorously as the code evolves. (Ref: PEP 8)
+4.  **Conciseness and Clarity:** Use clear, grammatically correct English. Prefer complete sentences for block comments. Inline comments can be more brief but must be unambiguous. (Ref: PEP 8, Google Python Style Guide)
+
+## Critical Rules
+
+*   **Docstrings (`"""Docstring"""`):**
+    *   **Purpose:** Document the purpose, arguments, return values, and any exceptions raised by modules, classes, functions, and methods.
+    *   **Standard:** Follow PEP 257 conventions. Use tools like Sphinx for standardized formatting.
+*   **Block Comments (`# Block comment`):**
+    *   **Purpose:** Explain complex sections of code, algorithms, or non-obvious logic preceding the code block they describe.
+    *   **Standard:** Indent at the same level as the code block. Use complete sentences. Separate paragraphs with a line containing a single `#`.
+*   **Inline Comments (`# Inline comment`):**
+    *   **Purpose:** Clarify individual statements or expressions on the same line.
+    *   **Standard:** Use sparingly. Separate from the code by at least two spaces. Explain non-obvious constants, conditions, or assumptions. Avoid explaining *what* the code does if it's clear.
+*   **Intent Revelation (`# [RATIONALE] ...`):**
+    *   **Purpose:** Explain *why* a specific architectural choice, design pattern, or implementation strategy was used, especially when alternatives exist or tradeoffs were made.
+    *   **Standard:** Use a block comment starting with `[RATIONALE]`. Clearly articulate the context and decision-making process.
+*   **Machine-Readable Signals:**
+    *   **Purpose:** Embed standardized tags for specific code characteristics relevant to analysis, debugging, or automated tooling (like LLMs).
+    *   **Standard:** Use inline or block comments with the following tags:
+        *   `# [OPTIMIZATION_PATH] Potential bottleneck in data processing loop.` - Identifies areas needing performance review.
+        *   `# [AGENT_LOGIC] Handles user intent classification based on embedding similarity.` - Flags code specifically related to LLM/Agent behavior.
+        *   `# [OBSERVED_FAILURE_CONTEXT] Fails when input contains non-ASCII chars, needs robust encoding.` - Marks areas known to cause issues under specific, observed conditions.
+
+## Examples
+
+<example>
+  ```python
+  import time
+
+  def process_large_dataset(data: list[dict]):
+      """Processes a large dataset, applying transformations and filtering.
+
+      Args:
+          data: A list of dictionaries representing records.
+      """
+      # [RATIONALE] Using a list comprehension for initial filtering for readability,
+      # but profiling showed iteration is the main cost. Switched to generator
+      # expression for memory efficiency on potentially huge datasets.
+      filtered_data = (record for record in data if record.get("status") == "active")
+
+      results = []
+      start_time = time.time()
+      for i, record in enumerate(filtered_data):
+          # Simulate complex processing
+          processed_value = record.get("value", 0) * 1.1
+
+          # [AGENT_LOGIC] Score adjustment based on a hypothetical sentiment model.
+          # This part interacts with an external AI service (details abstracted).
+          sentiment_score = _get_sentiment_score(record.get("text", ""))
+          adjusted_value = processed_value * (1 + sentiment_score * 0.1)
+
+          results.append({"id": record.get("id"), "result": adjusted_value})
+
+          # [OPTIMIZATION_PATH] This loop is the main performance bottleneck.
+          # Consider parallel processing or batching if speed becomes critical.
+          if i % 1000 == 0 and i > 0:
+              elapsed = time.time() - start_time
+              print(f"Processed {i} records in {elapsed:.2f}s")
+              # [OBSERVED_FAILURE_CONTEXT] Timeouts observed in staging env
+              # when processing > 1M records. Added logging for diagnostics.
+
+
+      return results
+
+  def _get_sentiment_score(text: str) -> float:
+      # Placeholder for external AI service call
+      # In a real scenario, this would involve API calls, error handling, etc.
+      # [RATIONALE] Abstracted external call to keep core logic clean.
+      # Assumes score between -1 (negative) and 1 (positive).
+      time.sleep(0.01) # Simulate network latency
+      return hash(text) % 100 / 100.0 # Dummy sentiment calculation
+  ```
+</example>
+
+<example type="invalid">
+  ```python
+  def add_numbers(a, b): # Function to add two numbers
+      # Check if a is None
+      if a is None:
+           # return None if a is None
+           return None
+      # Check b
+      if b is None: # check if b is None
+           return None
+      # Add a and b
+      result = a + b # store sum in result
+      # [RATIONALE] Because we need the sum. (Redundant/Unhelpful)
+      # [OPTIMIZATION_PATH] This addition might be slow? (Vague/Not actionable)
+      return result # return the result
+
+  # [OBSERVED_FAILURE_CONTEXT] Sometimes fails. (Lacks specific context)
+
+  # This code calculates the final price
+  final_price = initial_price * (1 + tax_rate) # Multiply price by 1 + tax rate
+  # It uses the initial price variable declared above
+  # and the tax_rate variable also declared above
+  # This comment explains what the code obviously does.
+
+  # [AGENT_LOGIC] Magic happens here. (Uninformative)
+  ```
+</example> 

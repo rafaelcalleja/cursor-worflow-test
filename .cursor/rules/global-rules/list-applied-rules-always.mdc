@@ -1,0 +1,34 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# List Applied Rules
+
+## Critical Rules
+
+- At the end of each response, include a section listing the rules applied during the generation of that response.
+- The section should be clearly marked, for example: "Applied Rules:"
+- List each applied rule by its full path (e.g., `core-rules/rule-generating-agent.mdc`).
+- If no specific rules were applied (other than global ones like this), state that explicitly or omit the section.
+
+## Examples
+
+<example>
+  Response content...
+
+  Applied Rules:
+  - global-rules/emoji-communication-always.mdc
+  - py-rules/python-commenting-standard-agent.mdc
+</example>
+
+<example type="invalid">
+  Response content...
+  (Missing the Applied Rules section)
+</example>
+
+<example type="invalid">
+  Response content...
+  Applied Rules: Rule A, Rule B (Incorrect formatting/path)
+</example> 
