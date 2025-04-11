@@ -1,6 +1,6 @@
 # tests/test_fizzBuzz.py
 import unittest
-from fizzBuzz import fizzbuzz # Assuming the function is named fizzbuzz
+from src.fizzBuzz import fizzbuzz # Assuming the function is named fizzbuzz
 
 # [RATIONALE] Using unittest for standard Python testing framework.
 # Tests cover standard FizzBuzz cases: divisible by 3, 5, both, and neither.
