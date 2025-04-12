@@ -9,7 +9,7 @@ def health_check():
     Returns:
         dict: A dictionary indicating the service status.
     """
-    # Simple health check, returns a fixed status
+    # [RATIONALE] Simple health check for MVP, returns a fixed status.
     return {"status": "healthy"}
 
 @router.get("/hw", status_code=200)
