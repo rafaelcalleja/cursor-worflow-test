@@ -1,5 +1,5 @@
 ---
-description: 'Enforces Test-Driven Development (TDD) or mandatory test creation AND EXECUTION for ALL Python code (.py files). Apply this rule whenever Python code is created, modified, or discussed, especially when generating new functions or modules. Tests are non-negotiable.'
+description: 'Enforces Test-Driven Development (TDD) or mandatory test creation AND EXECUTION for ALL Python code (.py files). Apply this rule whenever Python code is created OR modified (including documentation/comments), especially when generating new functions or modules. Tests are non-negotiable.'
 globs: *.py
 alwaysApply: false
 ---
@@ -21,7 +21,7 @@ alwaysApply: false
     - Add at least one test verifying a failure scenario (e.g., handling invalid inputs, edge cases, exceptions) to this file.
 - All new public functions/methods MUST have corresponding tests in a dedicated test file, created following either the TDD cycle or the Implementation First approach.
 - Modifications to existing functions MUST include updates or additions to their tests, ideally *before* changing the implementation. If implementation is changed first, tests MUST be updated/added immediately after.
-- **Mandatory Test Execution:** After creating or modifying tests, the AI agent MUST execute the test suite (e.g., using `pytest` or the appropriate test runner) to confirm they pass.
+- **Mandatory Test Execution:** After *any* modification to a `.py` file (including implementation, documentation, or comments), the AI agent MUST execute the relevant test suite (e.g., using `pytest`) to confirm they pass.
 
 ## Examples
 
@@ -78,6 +78,16 @@ alwaysApply: false
   # 4. Run tests (Pass) - AI MUST EXECUTE THIS STEP
 </example>
 
+<example name="Modification Only (e.g., Docstring)">
+  # 1. Modify existing file (e.g., update docstring)
+  # calculator.py
+  def add(a, b):
+      """Adds two numbers together.""" # Updated docstring
+      return a + b
+
+  # 2. Run tests (Pass) - AI MUST EXECUTE THIS STEP even though only docs changed.
+</example>
+
 <example type="invalid" name="Missing Test File/Tests After Implementation">
   # 1. Writing implementation
   # utils.py
@@ -101,8 +111,13 @@ alwaysApply: false
   # It only becomes acceptable under the "Implementation First" path IF failure tests are also added immediately to test_calculator.py.
 </example>
 
-<example type="invalid" name="Missing Test Execution After Creation/Modification">
-  # 1. Writing implementation (or modifying existing code)
-  # 2. Creating/Updating test file test_utils.py
+<example type="invalid" name="Missing Test Execution After Modification">
+  # 1. Writing implementation (or modifying existing code/docs)
+  # utils.py
+  def format_data(data):
+      """Formats the input data.""" # Modified docs
+      # ... implementation ...
+      return formatted_data
+  # 2. Creating/Updating test file test_utils.py (if needed)
   # 3. FAILS to run the tests using pytest or similar. THIS IS A VIOLATION.
 </example> 

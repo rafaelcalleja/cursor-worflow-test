@@ -3,7 +3,13 @@ from app.models.response import HealthStatus, Message
 
 router = APIRouter()
 
-@router.get("/health", status_code=200, response_model=HealthStatus)
+@router.get(
+    "/health", 
+    status_code=200, 
+    response_model=HealthStatus,
+    summary="Check Service Health",
+    tags=["Monitoring"]
+)
 def health_check() -> HealthStatus:
     """Endpoint to check the service health.
 
@@ -13,7 +19,13 @@ def health_check() -> HealthStatus:
     # [RATIONALE] Simple health check for MVP, returns a fixed status.
     return HealthStatus(status="healthy")
 
-@router.get("/hw", status_code=200, response_model=Message)
+@router.get(
+    "/hw", 
+    status_code=200, 
+    response_model=Message,
+    summary="Get Hello World Message",
+    tags=["Examples"]
+)
 def hello_world() -> Message:
     """Endpoint that returns a Hello World message.
 

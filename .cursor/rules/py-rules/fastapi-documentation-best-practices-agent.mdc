@@ -1,0 +1,65 @@
+---
+description: `Enforces documentation best practices for FastAPI applications, focusing on Data Models (Pydantic), Path Operations (docstrings, parameters, responses), and Middleware. Apply this rule when creating or modifying FastAPI endpoints, models, or middleware to ensure clear, consistent, and automatically generated documentation.`
+globs: 
+alwaysApply: false
+---
+
+# FastAPI Documentation Best Practices
+
+## Critical Rules
+
+- **Pydantic for Models:** Use Pydantic models for request and response data validation and automatic schema generation. Define clear field types and descriptions within the models.
+- **Path Operation Docstrings:** Use function docstrings to provide detailed descriptions for path operations. FastAPI reads these and supports Markdown formatting.
+- **`summary` Parameter:** Use the `summary` parameter in path operation decorators (`@app.get(...)`, etc.) for a short summary displayed in the API docs.
+- **`tags` Parameter:** Group related path operations using the `tags=["TagName"]` parameter. Consider using Python Enums for managing tags in larger applications.
+- **`deprecated` Parameter:** Mark path operations as deprecated using `deprecated=True` instead of removing them immediately.
+- **`response_model`:** Clearly define the primary successful response structure using the `response_model` parameter.
+- **`responses` Parameter:** Document additional possible responses (e.g., error codes like 404, 422) using the `responses` parameter with corresponding Pydantic models or descriptions.
+- **Middleware Documentation:** Document custom middleware clearly, explaining its purpose, what it modifies (request/response), and any added headers or context.
+
+## Examples
+
+<example>
+  from fastapi import FastAPI
+  from pydantic import BaseModel
+
+  app = FastAPI()
+
+  class Item(BaseModel):
+      name: str
+      description: str | None = None
+      price: float
+      tax: float | None = None
+
+  @app.post(
+      "/items/", 
+      response_model=Item, 
+      summary="Create an item",
+      tags=["Items"],
+      responses={
+          422: {"description": "Validation Error"}
+      }
+  )
+  async def create_item(item: Item):
+      """
+      Create an item with all the information:
+
+      - **name**: each item must have a name
+      - **description**: a long description
+      - **price**: required
+      - **tax**: if the item doesn't have tax, you can omit this
+      """
+      return item
+</example>
+
+<example type="invalid">
+  from fastapi import FastAPI
+  app = FastAPI()
+
+  # Missing Pydantic model for request/response
+  # Missing docstring, summary, tags, explicit responses
+  @app.get("/users/{user_id}") 
+  async def get_user(user_id: int, q: str | None = None): 
+      # Logic lacks clear documentation via parameters/docstring
+      return {"user_id": user_id, "query": q} 
+</example> 
