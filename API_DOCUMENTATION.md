@@ -87,6 +87,41 @@ make run # Or uvicorn app.main:app --reload
     curl http://localhost:8000/api/v1/hw
     ```
 
+### 4.3. System Information
+
+*   **Endpoint:** `GET /system_info`
+*   **Description:** Retrieves basic system information about the server node where the API is running. This includes OS details, CPU info, memory usage, disk usage (for the root filesystem `/`), current server time, and system uptime. Access is limited to information readable by the process user (non-root assumed).
+*   **Request:**
+    *   Method: `GET`
+    *   Headers: None
+    *   Body: None
+*   **Response:**
+    *   `200 OK`: System information retrieved successfully.
+        ```json
+        {
+          "current_time": "2023-10-27T10:30:00.123456", // ISO 8601 Format
+          "os_info": "Linux 5.15.0-generic (Example Version String)",
+          "cpu_info": "Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz (12 Cores @ 3700.00Mhz)",
+          "memory": {
+            "total": "15.50GB",
+            "available": "7.80GB",
+            "percent_used": 49.7
+          },
+          "disk": {
+            "total": "99.50GB",
+            "used": "45.20GB",
+            "free": "54.30GB",
+            "percent_used": 45.4
+          },
+          "uptime": "1 days, 02:30:05"
+        }
+        ```
+    *   *(Note: Specific values will vary based on the server environment.)*
+*   **Example (`curl`):**
+    ```bash
+    curl http://localhost:8000/api/v1/system_info
+    ```
+
 ## 5. Data Models
 
 *Descriptions of the data structures used in requests and responses.*
@@ -104,6 +139,37 @@ make run # Or uvicorn app.main:app --reload
 *   **Description:** Represents a generic message response.
 *   **Fields:**
     *   `message` (string, required): The content of the message.
+
+### 5.3. `MemoryInfo`
+
+*   **File:** `app/models/system.py`
+*   **Description:** Represents memory usage information.
+*   **Fields:**
+    *   `total` (string): Total physical memory (scaled, e.g., "15.50GB").
+    *   `available` (string): Available memory (scaled, e.g., "7.80GB").
+    *   `percent_used` (float): Percentage of memory used.
+
+### 5.4. `DiskInfo`
+
+*   **File:** `app/models/system.py`
+*   **Description:** Represents disk usage information for a specific partition (typically root `/`).
+*   **Fields:**
+    *   `total` (string): Total disk space (scaled).
+    *   `used` (string): Used disk space (scaled).
+    *   `free` (string): Free disk space (scaled).
+    *   `percent_used` (float): Percentage of disk space used.
+
+### 5.5. `SystemInfoResponse`
+
+*   **File:** `app/models/system.py`
+*   **Description:** The response model for the `/system_info` endpoint.
+*   **Fields:**
+    *   `current_time` (datetime): The current server time (ISO 8601 format).
+    *   `os_info` (string): Operating system details.
+    *   `cpu_info` (string): CPU model, core count, and frequency.
+    *   `memory` (`MemoryInfo`): Memory usage details.
+    *   `disk` (`DiskInfo`): Disk usage details for the root partition.
+    *   `uptime` (string): System uptime formatted as days, HH:MM:SS.
 
 ## 6. Usage Examples
 

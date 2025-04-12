@@ -3,6 +3,8 @@ from fastapi import FastAPI, Request
 import time
 # Correct the import path for the v1 endpoints router
 from app.api.v1.endpoints import endpoints as api_v1_endpoints
+# Import the new system endpoint router
+from app.api.v1.endpoints import system as api_v1_system
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -31,3 +33,5 @@ async def log_requests(request: Request, call_next):
 
 # Include the router from the v1 endpoints module with prefix and tags
 app.include_router(api_v1_endpoints.router, prefix="/api/v1", tags=["v1"])
+# Include the system router
+app.include_router(api_v1_system.router, prefix="/api/v1", tags=["system"])
