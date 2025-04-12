@@ -11,3 +11,12 @@ def health_check():
     """
     # Simple health check, returns a fixed status
     return {"status": "healthy"}
+
+@router.get("/hw", status_code=200)
+def hello_world():
+    """Endpoint that returns a Hello World message.
+
+    Returns:
+        dict: A dictionary containing the Hello World message.
+    """
+    return {"message": "Hello World"}
