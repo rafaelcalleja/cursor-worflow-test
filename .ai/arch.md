@@ -1,6 +1,6 @@
 # Architecture for API Rest Hello World
 
-Status: Draft
+Status: Approved
 
 ## Technical Summary
 
