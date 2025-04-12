@@ -25,7 +25,7 @@ This standard promotes clear, concise, and context-rich comments, balancing huma
     *   **Standard:** Indent at the same level as the code block. Use complete sentences. Separate paragraphs with a line containing a single `#`.
 *   **Inline Comments (`# Inline comment`):**
     *   **Purpose:** Clarify individual statements or expressions on the same line.
-    *   **Standard:** Use sparingly. Separate from the code by at least two spaces. Explain non-obvious constants, conditions, or assumptions. Avoid explaining *what* the code does if it's clear.
+    *   **Standard:** Use sparingly. Separate from the code by at least two spaces. Explain non-obvious constants, conditions, or assumptions. **Crucially, NEVER explain *what* the code does if it's clear from the code itself (e.g., avoid commenting basic assignments, imports, or simple function calls).** Focus only on the "why" or complex aspects.
 *   **Intent Revelation (`# [RATIONALE] ...`):**
     *   **Purpose:** Explain *why* a specific architectural choice, design pattern, or implementation strategy was used, especially when alternatives exist or tradeoffs were made.
     *   **Standard:** Use a block comment starting with `[RATIONALE]`. Clearly articulate the context and decision-making process.
@@ -89,6 +89,8 @@ This standard promotes clear, concise, and context-rich comments, balancing huma
 
 <example type="invalid">
   ```python
+  import os # Imports the os module
+
   def add_numbers(a, b): # Function to add two numbers
       # Check if a is None
       if a is None:

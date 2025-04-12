@@ -1,0 +1,34 @@
+---
+description: Defines the preferred file structure and best practices for FastAPI applications, to be applied when working on FastAPI projects, such as planning new features, modifying code, or reviewing FastAPI-related files.
+globs: 
+alwaysApply: false
+---
+
+# FastAPI Best Practices
+
+## Critical Rules
+
+- **File Structure:** Organize applications with exported routers, sub-routes, utilities, static content, and types (models, schemas) in a logical directory hierarchy.
+- **Component Usage:** Use functional components (plain functions) and Pydantic models for input validation and response schemas to ensure type safety and clarity.
+- **Route Definitions:** Employ declarative route definitions with clear return type annotations for better readability and maintainability.
+- **Asynchronous Operations:** Use async def for asynchronous functions and def for synchronous ones to optimize performance.
+- **Event Handling:** Minimize the use of @app.on_event("startup") and @app.on_event("shutdown"); prefer lifespan context managers for managing application lifecycle events.
+- **Middleware Application:** Implement middleware for logging, error monitoring, and performance optimization to handle cross-cutting concerns effectively.
+
+## Examples
+
+<example>
+  // Good: Proper FastAPI structure
+  // In main.py: from .routers import user_router
+  app.include_router(user_router)
+  // Using Pydantic for models: from pydantic import BaseModel
+  class User(BaseModel):
+      name: str
+      email: str
+</example>
+
+<example type="invalid">
+  // Bad: Unstructured code without Pydantic or proper routing
+  // In main.py: def get_user(): return {"name": "user"}  // Missing type annotations and models
+  app.on_event("startup", some_function)  // Overusing on_event without lifespan
+</example> 
