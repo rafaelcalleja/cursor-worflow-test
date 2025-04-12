@@ -76,7 +76,14 @@ This document outlines the requirements for a simple REST API service. The initi
   - Generate a Postman collection from the OpenAPI specification.
   - Include requests for the `/health` and `/hw` endpoints.
 
-- Story 6: Documentation Maintenance Rule Creation
+- Story 6: Comprehensive Static API Documentation (Markdown)
+  Status: 'To Do'
+  Requirements:
+  - Create a detailed static Markdown file (`API_DOCUMENTATION.md`) in the repository root.
+  - Document setup, authentication (if any), endpoints (`/health`, `/hw`), data models, and usage examples (curl/Postman).
+  - Ensure the documentation is comprehensive and independent of the running application.
+
+- Story 7: Documentation Maintenance Rule Creation
   Status: ''
   Requirements:
   - Create a new Cursor rule (`.cursor/rules/py-rules/fastapi-documentation-maintenance-agent.mdc`).

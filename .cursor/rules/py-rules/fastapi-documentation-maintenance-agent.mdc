@@ -1,0 +1,33 @@
+---
+description: `Apply this rule whenever changes are made to FastAPI endpoints (e.g., files matching app/api/**/*.py), Pydantic models (e.g., app/models/**/*.py), or related core application files (e.g., app/main.py). The goal is to ensure that all related documentation artifacts (README.md, API_DOCUMENTATION.md, OpenAPI specifications via docstrings/models, and the Postman collection) are consistently updated to reflect the code modifications. This rule guides the developer or AI to perform a comprehensive documentation review following relevant code changes.`
+globs: 
+alwaysApply: false
+---
+
+# FastAPI Documentation Maintenance Checklist
+
+## Critical Rules
+
+- **Identify Triggering Changes:** Confirm if the recent modifications involved files related to FastAPI endpoints (`app/api/**/*.py`), Pydantic models (`app/models/**/*.py`), or core application logic (`app/main.py`).
+- **Perform Documentation Audit:** If triggering changes occurred, verify and update the following documentation artifacts to ensure accuracy and consistency:
+    - `README.md`: Check if project overview, setup, or usage instructions need updates.
+    - `API_DOCUMENTATION.md`: Update endpoint descriptions, request/response examples, data model details, and usage instructions.
+    - OpenAPI Documentation (in code): Review and update path operation docstrings, summaries, tags, parameters, and `response_model` annotations within the relevant Python endpoint files (e.g., `app/api/v1/endpoints/endpoints.py`). Ensure Pydantic models in `app/models/response.py` are correct.
+    - Postman Collection (`docs/api_collection.postman_collection.json`): Update affected requests or consider regenerating the collection if changes are significant.
+- **Reference Related Rules:** Ensure updated Pydantic models and path operations adhere to `py-rules/fastapi-documentation-best-practices-agent`.
+
+## Examples
+
+<example>
+  // User modifies the response model for the /hw endpoint in `app/models/response.py`.
+  // AI applies this rule.
+  // AI Response: "I've updated the model. Remember to also update the `response_model` in `endpoints.py`, the relevant sections in `API_DOCUMENTATION.md`, and potentially the Postman collection (`docs/api_collection.postman_collection.json`) to reflect this change. Ensure the model documentation follows best practices." 📝
+</example>
+
+<example type="invalid">
+  // User modifies a test file in `tests/`.
+  // AI applies this rule inappropriately.
+  // --- OR ---
+  // User adds a new parameter to the /health endpoint in `endpoints.py`.
+  // AI applies the rule but only suggests updating `API_DOCUMENTATION.md`, forgetting the OpenAPI docstrings and Postman collection.
+</example> 
