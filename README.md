@@ -14,6 +14,7 @@ A minimal REST API service built with FastAPI, providing basic health check and 
 - [Running Tests](#running-tests)
 - [API Endpoints](#api-endpoints)
 - [Technology Stack](#technology-stack)
+- [Development Guidelines (Automated Rules)](#development-guidelines-automated-rules)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -120,6 +121,24 @@ The following endpoints are available under the `/api/v1` prefix:
 - **Framework:** FastAPI
 - **Testing:** Pytest
 - **Containerization:** Docker
+
+## Development Guidelines (Automated Rules)
+
+These rules help maintain code quality and consistency:
+
+### Global Rules
+
+- Consistent AI interaction & code modification
+- Clean code principles (SRP, DRY, Naming)
+- Applied rule tracking per response
+
+### Python Rules
+
+- Standardized FastAPI structure & practices
+- Mandatory & updated FastAPI documentation
+- Python commenting standard (PEP 8 based)
+- Test-Driven Development (TDD) for Python
+- Comment standards applied to TDD tests
 
 ## Contributing
 
