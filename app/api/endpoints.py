@@ -3,7 +3,7 @@ from fastapi import APIRouter
 router = APIRouter()
 
 @router.get("/health", status_code=200)
-def health_check():
+def health_check() -> dict:
     """Endpoint to check the service health.
 
     Returns:
@@ -13,7 +13,7 @@ def health_check():
     return {"status": "healthy"}
 
 @router.get("/hw", status_code=200)
-def hello_world():
+def hello_world() -> dict:
     """Endpoint that returns a Hello World message.
 
     Returns:
