@@ -12,6 +12,7 @@ alwaysApply: true
 - **Single Responsibility Principle (SRP):** Each function, class, or module should have one specific reason to change. Keep them small and focused.
 - **DRY (Don't Repeat Yourself):** Avoid duplicating code. Extract common logic into reusable functions or modules.
 - **Constants Over Magic Numbers:** Replace hard-coded values (magic numbers/strings) with named constants.
+- **Explicit Return Types:** Always specify return types for functions and methods for clarity and maintainability.
 - **Smart Comments:** Comment *why* something is done a certain way, not *what* the code does. Document APIs, complex logic, and non-obvious behaviors. Make code self-documenting where possible.
 - **Clean Structure & Formatting:** Organize code logically. Keep related code together. Maintain consistent formatting and indentation.
 - **Minimal Exposure/Encapsulation:** Only expose necessary information. Hide implementation details behind clear interfaces.
