@@ -1,0 +1,46 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+# Clean Code Principles
+
+## Critical Rules
+
+- **Meaningful Names:** Use descriptive names for variables, functions, classes that reveal their purpose. Avoid vague abbreviations.
+- **Single Responsibility Principle (SRP):** Each function, class, or module should have one specific reason to change. Keep them small and focused.
+- **DRY (Don't Repeat Yourself):** Avoid duplicating code. Extract common logic into reusable functions or modules.
+- **Constants Over Magic Numbers:** Replace hard-coded values (magic numbers/strings) with named constants.
+- **Smart Comments:** Comment *why* something is done a certain way, not *what* the code does. Document APIs, complex logic, and non-obvious behaviors. Make code self-documenting where possible.
+- **Clean Structure & Formatting:** Organize code logically. Keep related code together. Maintain consistent formatting and indentation.
+- **Minimal Exposure/Encapsulation:** Only expose necessary information. Hide implementation details behind clear interfaces.
+- **Refactor Continuously:** Regularly improve code structure and remove technical debt. Leave code cleaner than you found it.
+- **Write Tests:** Ensure code functions as expected and cover edge cases. Tests are crucial for maintainability.
+- **Clear Version Control:** Write descriptive commit messages explaining the *what* and *why* of changes. Make small, focused commits.
+- **Code Reviews:** Participate in code reviews to catch issues and ensure adherence to standards.
+
+## Examples
+
+<example>
+  // Good: Constant, descriptive name
+  const MAX_LOGIN_ATTEMPTS = 5;
+  function calculateTotalOrderPrice(items) { // SRP: Does one thing
+    // ... calculation logic ...
+  }
+  // Refactored repeated logic into a helper
+  function validateInput(input) { // DRY
+    // ... validation ...
+  }
+</example>
+
+<example type="invalid">
+  // Bad: Magic number, unclear function name
+  const x = 5;
+  function process(data) { // Vague name, likely violates SRP
+    // ... does multiple things ...
+  }
+  // Comment explains the obvious
+  // increment count by 1
+  count++;
+</example> 

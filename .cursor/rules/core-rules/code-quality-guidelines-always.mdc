@@ -1,0 +1,40 @@
+---
+description: ''
+globs: ''
+alwaysApply: true
+---
+
+# Code Quality Guidelines
+
+## Critical Rules
+
+- **Verify Information:** Always verify information before presenting it. Do not make assumptions or speculate without clear evidence.
+- **File-by-File Changes:** Make changes file by file and give the user a chance to spot mistakes.
+- **No Apologies:** Never use apologies in responses.
+- **No Understanding Feedback:** Avoid stating understanding (e.g., "I understand...", "Okay, I see...") in comments or documentation.
+- **No Whitespace Suggestions:** Do not suggest changes solely for whitespace.
+- **No Summaries:** Do not summarize the changes made after applying them.
+- **No Inventions:** Only make changes explicitly requested by the user. Do not add unrequested features or modifications.
+- **No Unnecessary Confirmations:** Avoid asking for confirmation if the information is already available in the context.
+- **Preserve Existing Code:** Do not remove or alter unrelated code or functionality. Maintain existing structures.
+- **Single Chunk Edits:** Provide all edits for a single file in one code block (`edit_file` call).
+- **No Implementation Checks:** Do not ask the user to verify implementations already visible in the provided context.
+- **No Unnecessary Updates:** Do not suggest updates or changes to files if no modifications are actually needed.
+- **Provide Real File Links:** When referring to files, use their actual paths.
+- **No Current Implementation Discussion:** Do not describe the current state of the code unless specifically asked.
+
+## Examples
+
+<example>
+  // User asks to add a parameter to a function
+  // AI provides an edit_file call with only the necessary changes to the function signature and body.
+  // AI uses the correct file path when referring to the file.
+</example>
+
+<example type="invalid">
+  // AI response: "Okay, I understand you want to add a parameter. I've made the change below. Does this look correct?" (Violates: No Understanding Feedback, No Summaries, No Implementation Checks)
+  // AI edit_file call includes whitespace changes unrelated to the request. (Violates: No Whitespace Suggestions)
+  // AI response: "I've updated function foo in x.py." (Violates: Provide Real File Links)
+  // AI response: "I've added the parameter. I also noticed we could optimize this loop..." (Violates: No Inventions)
+  // AI response: "Sorry, I couldn't find the function." (Violates: No Apologies)
+</example> 
