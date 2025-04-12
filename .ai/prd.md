@@ -36,6 +36,8 @@ This document outlines the requirements for a simple REST API service. The initi
     - Focus: Improve logging, add metrics, implement tracing.
 ### Epic-4: Future - Security Hardening
     - Focus: Implement authentication, authorization, rate limiting.
+### Epic-5: Documentation & Tooling
+    - Focus: Establish and maintain comprehensive project and API documentation and supporting tools.
 
 ## Epic 1: Story List (MVP)
 
@@ -52,6 +54,33 @@ This document outlines the requirements for a simple REST API service. The initi
   Requirements:
   - Implement the `/hw` GET endpoint.
   - Add unit tests for the hello world endpoint.
+
+## Epic 5: Story List (Documentation & Tooling)
+
+- Story 3: Initial Project Documentation (README)
+  Status: ''
+  Requirements:
+  - Create a comprehensive `README.md` file.
+  - Explain project purpose, structure, setup, and usage.
+  - Include build and run instructions (Docker).
+
+- Story 4: API Auto-Documentation Setup (OpenAPI/Swagger)
+  Status: ''
+  Requirements:
+  - Configure FastAPI to automatically generate OpenAPI documentation (Swagger UI/ReDoc).
+  - Ensure endpoints (`/health`, `/hw`) are correctly documented using Pydantic models and docstrings following best practices.
+
+- Story 5: Postman Collection Generation
+  Status: ''
+  Requirements:
+  - Generate a Postman collection from the OpenAPI specification.
+  - Include requests for the `/health` and `/hw` endpoints.
+
+- Story 6: Documentation Maintenance Rule Creation
+  Status: ''
+  Requirements:
+  - Create a new Cursor rule (`.cursor/rules/py-rules/fastapi-documentation-maintenance-agent.mdc`).
+  - The rule should guide the AI to update the README, OpenAPI docs, and potentially the Postman collection whenever API endpoints or project structure change.
 
 ## Technology Stack
 
