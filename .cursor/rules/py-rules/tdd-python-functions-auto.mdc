@@ -1,6 +1,6 @@
 ---
-description: 'Enforces Test-Driven Development (TDD) or mandatory test creation AND EXECUTION for ALL Python code (.py files). Apply this rule whenever Python code is created OR modified (including documentation/comments), especially when generating new functions or modules. Tests are non-negotiable.'
-globs: *.py
+description: 'Enforces Test-Driven Development (TDD) or mandatory test creation AND EXECUTION for ALL Python code (.py files) OR project structure affecting Python imports. Apply this rule whenever Python code is created OR modified (including documentation/comments), or when file/directory structures are changed. Tests are non-negotiable.'
+globs: "*.py"
 alwaysApply: false
 ---
 
@@ -21,7 +21,7 @@ alwaysApply: false
     - Add at least one test verifying a failure scenario (e.g., handling invalid inputs, edge cases, exceptions) to this file.
 - All new public functions/methods MUST have corresponding tests in a dedicated test file, created following either the TDD cycle or the Implementation First approach.
 - Modifications to existing functions MUST include updates or additions to their tests, ideally *before* changing the implementation. If implementation is changed first, tests MUST be updated/added immediately after.
-- **Mandatory Test Execution:** After *any* modification to a `.py` file (including implementation, documentation, or comments), the AI agent MUST execute the relevant test suite (e.g., using `pytest`) to confirm they pass.
+- **Mandatory & Immediate Test Execution:** After *any* modification to a `.py` file (including implementation, documentation, or comments) **OR any change to the project structure that could affect Python imports (e.g., moving files, renaming directories)**, the AI agent MUST execute the relevant test suite (e.g., using `pytest`) **immediately** in the next step to confirm they pass. This verification is crucial and non-negotiable before proceeding with further actions.
 
 ## Examples
 
@@ -120,4 +120,9 @@ alwaysApply: false
       return formatted_data
   # 2. Creating/Updating test file test_utils.py (if needed)
   # 3. FAILS to run the tests using pytest or similar. THIS IS A VIOLATION.
+</example>
+
+<example type="invalid" name="Missing Test Execution After Restructuring">
+  # 1. Restructuring project files/directories (e.g., moving app/api/endpoints.py to app/api/v1/endpoints/endpoints.py)
+  # 2. FAILS to run the tests using pytest or similar immediately after the restructuring. THIS IS A VIOLATION, as restructuring can break imports.
 </example> 

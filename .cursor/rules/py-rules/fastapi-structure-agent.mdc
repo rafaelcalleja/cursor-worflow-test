@@ -1,0 +1,89 @@
+---
+description: 'Define la estructura de directorios preferida y las mejores prácticas para aplicaciones FastAPI. Aplicar al planificar nuevas características, modificar código o revisar archivos relacionados con FastAPI para garantizar la coherencia y la organización.'
+globs: "" # Se aplica bajo demanda por el agente
+alwaysApply: false
+---
+
+# Estructura de Proyecto FastAPI y Mejores Prácticas
+
+## Principios Clave
+
+- **Separación de Intereses:** Mantén los endpoints (routers), modelos de datos (Pydantic), lógica de acceso a datos (CRUD), lógica de negocio (servicios) y configuración en directorios separados.
+- **Modularidad:** Organiza el código en módulos reutilizables, preferiblemente por funcionalidad o recurso (ej., `users`, `items`).
+- **Nomenclatura Clara:** Usa nombres descriptivos para archivos y directorios (ej., `app/api/v1/endpoints/users.py`, `app/models/user.py`).
+- **Pruebas:** Mantén una estructura de directorio `tests/` que refleje la estructura de `app/` para facilitar la localización de las pruebas.
+
+## Estructura de Directorio Recomendada
+
+```
+app/                      # Directorio principal de la aplicación
+│   ├── __init__.py
+│   ├── main.py               # Inicialización de FastAPI, inclusión de routers
+│   ├── core/                 # Configuración, DB, etc.
+│   │   ├── __init__.py
+│   │   ├── config.py
+│   │   └── database.py       # (Opcional)
+│   ├── api/                  # Endpoints/Routers
+│   │   ├── __init__.py
+│   │   └── v1/               # Versión de API
+│   │       ├── __init__.py
+│   │       ├── endpoints/      # Routers por recurso
+│   │       │   ├── __init__.py
+│   │       │   └── users.py
+│   │       │   └── items.py
+│   │       └── deps.py         # (Opcional) Dependencias API
+│   ├── models/               # Modelos Pydantic (validación)
+│   │   ├── __init__.py
+│   │   └── user.py
+│   │   └── item.py
+│   ├── schemas/              # (Opcional) Esquemas ORM
+│   │   ├── __init__.py
+│   ├── crud/                 # Operaciones de Base de Datos
+│   │   ├── __init__.py
+│   │   └── crud_user.py
+│   │   └── crud_item.py
+│   ├── services/             # (Opcional) Lógica de negocio
+│   │   ├── __init__.py
+│   │   └── user_service.py
+│   └── utils/                # Utilidades
+│       ├── __init__.py
+tests/                    # Pruebas (estructura espejo)
+│   ├── __init__.py
+│   ├── api/
+│   │   └── v1/
+│   │       └── endpoints/
+│   │           └── test_users.py
+│   └── crud/
+│       └── test_crud_user.py
+requirements.txt
+Dockerfile
+README.md
+.env                      # Ignorado por Git
+```
+
+## Reglas Críticas
+
+- Crear nuevos endpoints dentro de `app/api/{version}/endpoints/{recurso}.py`.
+- Crear nuevos modelos Pydantic en `app/models/{modelo}.py`.
+- Crear nuevas funciones CRUD en `app/crud/crud_{recurso}.py`.
+- Crear nueva lógica de negocio en `app/services/{recurso}_service.py`.
+- Crear nuevas pruebas en el directorio `tests/` correspondiente a la estructura de `app/`.
+- Mantener la inicialización de la aplicación y la inclusión de routers principales en `app/main.py`.
+- Ubicar la configuración y conexión a BD en `app/core/`.
+
+## Ejemplos
+
+<example>
+  // Usuario pide añadir un endpoint para obtener detalles de un producto
+  // AI crea/modifica el archivo app/api/v1/endpoints/products.py
+  // AI crea/modifica el modelo Pydantic en app/models/product.py
+  // AI crea/modifica las funciones CRUD en app/crud/crud_product.py (si es necesario)
+  // AI crea/modifica las pruebas en tests/api/v1/endpoints/test_products.py
+</example>
+
+<example type="invalid">
+  // AI coloca la lógica CRUD directamente en el archivo del endpoint (app/api/v1/endpoints/products.py)
+  // AI crea un modelo Pydantic dentro del archivo del endpoint.
+  // AI coloca todas las pruebas en un único archivo tests/test_all.py
+  // AI define la configuración de la base de datos en app/main.py
+</example> 

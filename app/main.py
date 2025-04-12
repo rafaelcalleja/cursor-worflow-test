@@ -1,7 +1,8 @@
 import logging
 from fastapi import FastAPI, Request
 import time
-from app.api import endpoints # Import the endpoints module
+# Correct the import path for the v1 endpoints router
+from app.api.v1.endpoints import endpoints as api_v1_endpoints
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -28,5 +29,5 @@ async def log_requests(request: Request, call_next):
     logger.info(f"Request finished: {request.method} {request.url.path} - Status: {response.status_code} - Duration: {process_time:.4f}s")
     return response
 
-# Include the router from the endpoints module
-app.include_router(endpoints.router)
+# Include the router from the v1 endpoints module with prefix and tags
+app.include_router(api_v1_endpoints.router, prefix="/api/v1", tags=["v1"])
