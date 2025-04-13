@@ -1,8 +1,5 @@
-# Private individual user cursor rules
-.cursor/rules/_*.mdc
 __pycache__
 .venv/*
-.ai/
 .vscode/
 .idea/
 .pytest_cache/
